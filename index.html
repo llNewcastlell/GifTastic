@@ -12,21 +12,23 @@
 
     <script src="assets/app.js"></script>
     <!-- <script src="assets/style.css"></script> -->
+    <link rel="stylesheet" href="assets/style.css">
 
-    <style>
+    <!-- <style>
         
 
         .container {
             border: 5px solid black;
             margin-top: 10px;
         }
-    </style>
+    </style> -->
     <title>GifTastic</title>
 </head>
 
 <body>
     <div class="card">
         <h5 class="card-header">GifTasitc</h5>
+        <!--  Buttons will get Dumped Here  -->
         <div class="card-body">
             <button data-search="Dog">Dog</button>
             <button data-search="Cat">Cat</button>
@@ -36,46 +38,77 @@
             <button data-search="Happy">Happy</button>
         </div>
     </div>
+    <div class="gifentry">
+        <form id="gif-form">
+            <label for="gif-input">Add a Gif</label>
+            <input type="text" id="giffy-input">
+            <br>
 
+            <!-- Button triggers new gif to be added -->
+            <input id="add-gif" type="submit" value="Add a Gif">
+        </form>
+    </div>
     <div class="row">
         <div class="col-sm-12">
             <div class="container">
-
+                <h4>Gifs:</h4>
 
                 <!-- Gif's will Get Dumped Dere -->
                 <div id="gif-view"></div>
 
-                <!--  Buttons will get Dumped Here  -->
-                <div id="buttons-view"></div>
 
-                <form id="gif-form">
-                    <label for="gif-input">Add a GIf</label>
-                    <input type="text" id="giffy-input">
-                    <br>
-
-                    <!-- Button triggers new gif to be added -->
-                    <input id="add-gif" type="submit" value="Add a Gif">
-                </form>
             </div>
         </div>
     </div>
 
     <script>
-    $("button").on("click", function () {
-    var gif = $(this).attr("search");
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gif + "&apikey=aCVdoVrDcirk3M3UYEkHLNkpnieoDxvD&limit=10";
-    console.log(queryURL);
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).then(function (response) {
-        console.log(response);
-        for (i = 0; i < response.data.length; i++) {
-            $("#gif-view").append("<p>Rating: " + response.data[i].rating + "</p>");
-            $("gif-view").append("<img src ='" + response.data[i].images.downsized_still.url + "'>");
-        }
-    });
-});
+
+        var gifs = ["Dog","Cat","Soccer"];
+
+
+        $("button").on("click", function () {
+            var gif = $(this).data("search");
+            console.log(gif);
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gif +
+                "&apikey=aCVdoVrDcirk3M3UYEkHLNkpnieoDxvD&limit=5";
+            console.log(queryURL);
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function (response) {
+                console.log(response);
+                for (i = 0; i < response.data.length; i++) {
+                    $("#gif-view").prepend("<p>Rating: " + response.data[i].rating + "</p>");
+
+                    $("#gif-view").prepend("<img src ='" + response.data[i].images.downsized.url + "'>");
+                }
+            });
+        });
+
+// This function handles events where a "add a gif" button is clicked
+        $("#add-gif").on("click", function(event) {
+        event.preventDefault();
+        // var gifs = [];
+        // This line grabs the input from the textbox
+        var giffy = $("#giffy-input").val().trim();
+            console.log(giffy)
+
+            $(".card-body").append("<button data-search>" + giffy + "</button>");
+        // Adding gif from the textbox to the array
+        // giffy.push(gifs);
+        console.log("--------------" + giffy);
+
+        // Calling renderButtons which handles the processing of our movie array
+        // renderButtons();
+      });
+
+      // Adding a click event listener to all elements with a class of "movie-btn"
+    //   $(document).on("click", ".movie-btn", displayMovieInfo);
+
+      // Calling the renderButtons function to display the intial buttons
+    //   renderButtons();
+
+
     </script>
 </body>
 

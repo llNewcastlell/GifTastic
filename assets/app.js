@@ -1,6 +1,6 @@
-var topics = [];
+var topics;
 
-function myGif(){
+function myGif() {
     $("button").on("click", function () {
         var topics = $(this).data("search");
         console.log(topics);
@@ -14,7 +14,7 @@ function myGif(){
             console.log(response);
             for (i = 0; i < response.data.length; i++) {
                 $("#gif-view").prepend("<p>Rating: " + response.data[i].rating + "</p>");
-    
+
                 $("#gif-view").prepend("<img src ='" + response.data[i].images.downsized.url + "'>");
             }
         });
@@ -22,13 +22,13 @@ function myGif(){
 }
 
 
-// This function handles events where a "add a gif" button is clicked
+// This function handles events where the "add a gif" button is clicked
 $("#add-gif").on("click", function (event) {
     event.preventDefault();
     // var gifs = [];
     // This line grabs the input from the textbox
     var giffy = $("#giffy-input").val().trim();
-    topics.push(giffy);
+    topics = giffy;
     console.log(topics);
     renderButton();
     // for(b = 0; b < topics.length; b++){
@@ -37,29 +37,24 @@ $("#add-gif").on("click", function (event) {
 
     // $(".card-body").append("<button>" + giffy + "</button>");
     // Adding gif from the textbox to the array
-    // giffy.push(gifs);
-    console.log("--------------" + giffy);
-    $("#giffy-input").empty();
+        console.log("--------------" + giffy);
+    $("#giffy-input").val("");
     // renderButton();
-   
+
 });
 
 
 $(document).on("click", "button", myGif);
 
-renderButton();
+function renderButton() {
 
-function renderButton (){
+    $("#add-gif").empty();
 
-    $("#giffy-input").empty();
-
-    for(var i = 0; i < topics.length; i++ ){
+    // for (var i = 0; i < topics.length; i++) {
         var a = $("<button>");
         // a.addClass("data-search");
-        a.attr("data-search", topics[i]);
-        a.text(topics[i]);
+        a.attr("data-search", topics);
+        a.text(topics);
         $(".card-body").append(a);
-    }
-}
-
-
+    // }
+};

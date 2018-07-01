@@ -30,10 +30,10 @@ $("#add-gif").on("click", function (event) {
     var giffy = $("#giffy-input").val().trim();
     topics.push(giffy);
     console.log(topics);
-
-    for(a = 0; a < topics.length; a++){
-        $(".card-body").append("<button>" + giffy + "</button>");   
-    }
+    renderButton();
+    // for(b = 0; b < topics.length; b++){
+    //     $(".card-body").append("<button>" + giffy + "</button>");   
+    // }
 
     // $(".card-body").append("<button>" + giffy + "</button>");
     // Adding gif from the textbox to the array
@@ -44,13 +44,14 @@ $("#add-gif").on("click", function (event) {
    
 });
 
+
 $(document).on("click", "button", myGif);
 
-
+renderButton();
 
 function renderButton (){
 
-    // $("#giffy-input").empty();
+    $("#giffy-input").empty();
 
     for(var i = 0; i < topics.length; i++ ){
         var a = $("<button>");

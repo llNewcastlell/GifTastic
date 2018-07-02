@@ -41,6 +41,7 @@ $("#add-gif").on("click", function (event) {
     $("#giffy-input").val("");
     // renderButton();
 
+
 });
 
 
